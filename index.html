@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Fetch API StarWars</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+	<div class="container">
+		<h1 class="display-3 mb-4">Fatch API StarWars</h1>
+		<div class="d-flax">
+			<button class = "btn btn-primary mr-4" id="getPeople">Get People</button>
+			<button class = "btn btn-success mr-4" id="getPlanets">Get Planets</button>
+			<button class = "btn btn-warning mr-4" id="getShips">Get Spaceships</button>
+		</div>
+	<hr>
+	<div id="output"></div>
+
+</div>
+
+
+<script>
+document.getElementById("getPeople").addEventListener("click", getPeople);
+document.getElementById("getPlanets").addEventListener("click", getPlanets);
+document.getElementById("getShips").addEventListener("click", getShips);
+
+
+
+function getPeople(){
+	fetch(["https://swapi.co/api/people/"])
+	.then((res)=> {return res.json()})
+	.then((data)=> {
+		let output = `<h2> People </h2>`;
+		data.results.map(peo => {
+			output += `
+			<div class="card card-body mb-3">
+			<h3>${peo.name}</h3>
+			<ul class="list-unstyled">
+				<li>Birth date: ${peo.birth_year}</li>
+				<li>Hair color: ${peo.hair_color}</li>
+				<li>Eye color: ${peo.eye_color}</li>
+				<img alt = "pic" src = "https://robohash.org/${peo.name}" width = "150px">
+			</ul>
+			</div>
+			`
+		});
+		document.getElementById("output").innerHTML = output;
+	})
+}
+
+function getPlanets(){
+	fetch(["https://swapi.co/api/planets/"])
+	.then((res)=> {return res.json()})
+	.then((data)=> {
+		let output = `<h2> Planets </h2>`;
+		data.results.map(pl => {
+			output += `
+			<div class="card card-body mb-3">
+			<ul class="list-unstyled">
+				<li>Name: ${pl.name}</li>
+				<li>Rotation period: ${pl.rotation_period}</li>
+				<li>Diameter: ${pl.diameter}</li>
+				<li>Terrain: ${pl.terrain}</li>
+				
+			</ul>
+			</div>
+			`
+		});
+		document.getElementById("output").innerHTML = output;
+	})
+}
+
+function getShips(){
+	fetch(["https://swapi.co/api/starships/"])
+	.then((res)=> {return res.json()})
+	.then((data)=> {
+		let output = `<h2> Planets </h2>`;
+		data.results.map(sh => {
+			output += `
+			<div class="card card-body mb-3">
+			<h3>${sh.name}</h3>
+			<h5>Model: ${sh.model}</h5>
+			<h6>Length: ${sh.length}</h6>
+			<h6>Crew: ${sh.crew}</h6>
+			<h6>Cargo: ${sh.cargo_capacity}</h6>
+			</ul>
+			</div>
+			`
+		});
+		document.getElementById("output").innerHTML = output;
+	})
+}
+
+
+</script>
+</body>
+</html>
